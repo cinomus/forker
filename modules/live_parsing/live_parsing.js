@@ -6,9 +6,9 @@ let fonbetPage;
 
 async function live_parsing() {
 
-
-    await workWithFonbet();
     await workWithOlimp();
+    await workWithFonbet();
+    
 
 
     async function workWithFonbet() {
