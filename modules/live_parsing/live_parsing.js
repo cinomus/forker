@@ -19,7 +19,7 @@ async function live_parsing() {
         await fonbetPage.waitForSelector('#page__wrap > div.page__container.js-scroll-container.js-page-container._device_desktop._theme_red > div.page-layout--qkduQ > div > div.coupon-layout__content--gGzha > div > div.line-filter-layout__content--q-JdM > section > div.table__flex-container > table')
         setInterval(async () => {
             let t0 = performance.now();
-            let fonbetMatches = await live()
+            await live()
             let t1 = performance.now();
             console.log('Took', (t1 - t0).toFixed(4), 'milliseconds fonbet');
         }, 1000)
