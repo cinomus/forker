@@ -6,6 +6,7 @@ router.get('/forks', async (req, res)=>{
     try {
         let arr = await Fork.getForks();
         await sendRes();
+        console.log('vilok: ',arr.length)
 
         async function sendRes(){
             if (arr.length !== 0){

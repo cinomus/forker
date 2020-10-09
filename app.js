@@ -16,8 +16,6 @@ app.compare = async function compare() {
 
         let olimpMatches = await getM('olimp')
         let fonbetMatches = await getM('fonbet')
-        // console.log('olimp: ', olimpMatches.length)
-        // console.log('fonbet: ', fonbetMatches.length)
         let changedKoefs = await findChangedKoefs(olimpMatches, fonbetMatches);
         await comparing(changedKoefs, olimpMatches, fonbetMatches);
         savedOlimpMatches = olimpMatches;
