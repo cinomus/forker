@@ -12,7 +12,7 @@ async function live_parsing() {
 
 
     async function workWithFonbet() {
-        const browser = await puppeteer.launch({headless: false});
+        const browser = await puppeteer.launch({headless: true, ignoreDefaultArgs: ['--disable-extensions']});
         fonbetPage = await browser.newPage();
         await fonbetPage.setViewport({width: 1920, height: 1080});
         await fonbetPage.goto('https://www.fonbet.ru/live/');
@@ -115,7 +115,7 @@ async function live_parsing() {
     }
 
     async function workWithOlimp() {
-        const browser = await puppeteer.launch({headless: false});
+        const browser = await puppeteer.launch({headless: true, ignoreDefaultArgs: ['--disable-extensions']});
         olimpPage = await browser.newPage();
         await olimpPage.setViewport({width: 1920, height: 1080});
         await olimpPage.goto('https://www.olimp.bet/live');
