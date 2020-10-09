@@ -1,5 +1,4 @@
 const puppeteer = require(`puppeteer`);
-const {Cluster} = require('puppeteer-cluster');
 const {performance} = require('perf_hooks');
 
 let olimpPage;
