@@ -3,11 +3,9 @@ const router = Router();
 const Fork = require('../models/Fork');
 
 router.get('/forks', async (req, res)=>{
-    console.log('poimal')
     try {
         let arr = await Fork.getForks();
         await sendRes();
-        console.log(arr.length)
 
         async function sendRes(){
             if (arr.length !== 0){

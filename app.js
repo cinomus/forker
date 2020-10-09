@@ -13,18 +13,15 @@ app.compare = async function compare() {
     let savedFonbetMatches = [];
     let savedLigaMatches = [];
     setInterval(async () => {
-        let t0 = performance.now();
 
         let olimpMatches = await getM('olimp')
         let fonbetMatches = await getM('fonbet')
-        console.log('olimp: ', olimpMatches.length)
-        console.log('fonbet: ', fonbetMatches.length)
+        // console.log('olimp: ', olimpMatches.length)
+        // console.log('fonbet: ', fonbetMatches.length)
         let changedKoefs = await findChangedKoefs(olimpMatches, fonbetMatches);
         await comparing(changedKoefs, olimpMatches, fonbetMatches);
         savedOlimpMatches = olimpMatches;
         savedFonbetMatches = fonbetMatches;
-        let t1 = performance.now();
-        // console.log('Took', (t1 - t0).toFixed(4), 'milliseconds');
     }, 1000)
 
     async function comparing(changedKoefs, ...arguments) {
@@ -131,7 +128,6 @@ app.compare = async function compare() {
 
                                     let forkValue = (1 / +value1) + (1 / +value2);
                                     if (forkValue < 1) {
-                                        console.log('vilka')
                                         // console.log(`${elem.team_1} ${elem.team_2} ${value1} ${value2} ${forkValue}`)
                                         //TODO: здесь создаем объект вилки, а далее проверяем кэфы на инициатора, если кэф есть в
                                         // измененных кэфах то добавляем его в инициатора

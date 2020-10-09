@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 const app = express();
 const myapp = require('./app')
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 const {Router} = require('./node_modules/express')
 
 app.use('/api/', require('./routes/home'))

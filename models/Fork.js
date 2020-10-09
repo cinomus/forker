@@ -27,7 +27,6 @@ class Fork {
         return Fork.forks;
     }
     async addFork() {
-        console.log(Fork.forks)
         await this._autoDeleteFork();
         if (this.initiator1 === undefined) {
             return
