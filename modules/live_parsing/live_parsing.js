@@ -6,20 +6,22 @@ let fonbetPage;
 
 async function live_parsing() {
 
-
-    await workWithFonbet();
     await workWithOlimp();
+    await workWithFonbet();
+
 
 
     async function workWithFonbet() {
-        const browser = await puppeteer.launch({headless: false});
+        const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox','--headless']});
         fonbetPage = await browser.newPage();
         await fonbetPage.setViewport({width: 1920, height: 1080});
+        const navigationPromise = fonbetPage.waitForNavigation({waitUntil: "domcontentloaded"});
         await fonbetPage.goto('https://www.fonbet.ru/live/');
+        await navigationPromise;
         await fonbetPage.waitForSelector('#page__wrap > div.page__container.js-scroll-container.js-page-container._device_desktop._theme_red > div.page-layout--qkduQ > div > div.coupon-layout__content--gGzha > div > div.line-filter-layout__content--q-JdM > section > div.table__flex-container > table')
         setInterval(async () => {
             let t0 = performance.now();
-            await live()
+            let fonbetMatches = await live()
             let t1 = performance.now();
             console.log('Took', (t1 - t0).toFixed(4), 'milliseconds fonbet');
         }, 1000)
@@ -115,7 +117,7 @@ async function live_parsing() {
     }
 
     async function workWithOlimp() {
-        const browser = await puppeteer.launch({headless: true});
+        const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
         olimpPage = await browser.newPage();
         await olimpPage.setViewport({width: 1920, height: 1080});
         await olimpPage.goto('https://www.olimp.bet/live');
