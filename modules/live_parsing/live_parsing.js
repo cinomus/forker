@@ -12,7 +12,7 @@ async function live_parsing() {
 
 
     async function workWithFonbet() {
-        const browser = await puppeteer.launch({headless: true});
+        const browser = await puppeteer.launch({headless: false});
         fonbetPage = await browser.newPage();
         await fonbetPage.setViewport({width: 1920, height: 1080});
         await fonbetPage.goto('https://www.fonbet.ru/live/');
