@@ -39,7 +39,7 @@ app.compare = async function compare() {
                 } else {
                     for (let elem of arg) {
                         for (let elem2 of arg2) {
-                            if (((elem.team_1 === elem2.team_1 && elem.team_2 === elem2.team_2)|| (elem.team_1 === elem2.team_2 && elem.team_2 === elem2.team_1))&& elem.discipline === elem2.discipline && elem.platform !== elem2.platform) {
+                            if (elem.team_1 === elem2.team_1 && elem.team_2 === elem2.team_2&& elem.discipline === elem2.discipline && elem.platform !== elem2.platform) {
                                 // console.log(elem, elem2);
                                 if (elem.drawn_game !== undefined && elem2.drawn_game !== undefined) {
                                     await findForks(elem.koef_1, elem2.winner2_or_noWinners, undefined , undefined,'koef_1&winner2_or_noWinners')
