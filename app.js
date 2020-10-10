@@ -11,7 +11,6 @@ app.parse = async function parse() {
 app.compare = async function compare() {
     let savedOlimpMatches = [];
     let savedFonbetMatches = [];
-    let savedLigaMatches = [];
     setInterval(async () => {
 
         let olimpMatches = await getM('olimp')
@@ -21,7 +20,7 @@ app.compare = async function compare() {
         await comparing(changedKoefs, olimpMatches, fonbetMatches);
         savedOlimpMatches = olimpMatches;
         savedFonbetMatches = fonbetMatches;
-    }, 1000)
+    }, 500)
 
     async function comparing(changedKoefs, ...arguments) {
         // console.log('checkpoint 1')

@@ -13,7 +13,7 @@ function reloadForks() {
     const response = await fetch('/api/forks')
     const data = await response.json()
     forks = data;
-    }, 1000)
+    }, 500)
 }
 
 setInterval(() => {
@@ -53,8 +53,8 @@ setInterval(() => {
                                         React.createElement('tr', null, `${item.initiator2.team_1} vs ${item.initiator2.team_2}`)
                                     ),
                                     React.createElement('td', null,
-                                        React.createElement('tr', null, React.createElement('a', {'href': item.initiator1.href}, 'link')),
-                                        React.createElement('tr', null, React.createElement('a', {'href': item.initiator2.href}, 'link'))
+                                        React.createElement('tr', null, React.createElement('a', {'href': item.initiator1.href, 'target':'_blank'}, 'link')),
+                                        React.createElement('tr', null, React.createElement('a', {'href': item.initiator2.href, 'target':'_blank'}, 'link'))
                                     )
                                 )
                             )

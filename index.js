@@ -20,12 +20,12 @@ async function start() {
     try{
         // const url = 'mongodb+srv://cinomus:2cSUNc9MmqN5bDZt@cluster0.zkqqg.mongodb.net/test?retryWrites=true&w=majority'
         // await mongoose.connect(url, {useNewUrlParser:true,useFindAndModify: false})
+
+        await myapp.parse();
+        await myapp.compare();
         app.listen(PORT, ()=>{
             console.log(`Started on ${PORT}!`);
         })
-        await myapp.parse();
-        await myapp.compare();
-
     }
     catch (e) {
         console.log(e)

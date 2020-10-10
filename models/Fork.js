@@ -33,7 +33,14 @@ class Fork {
         }
         else{
             let iteration = 0;
+
             let savedForks = Fork.forks.filter((savedFork) => {
+                if (!savedFork.initiator1.id || !savedFork.initiator2.id||!savedFork.initiator2.koef){
+                    console.log(savedFork)
+                }
+                if (!this.initiator1.id || !this.initiator2.id||!this.initiator2.koef){
+                    console.log('pizda v vilke')
+                }
                 if (savedFork.initiator1.id === this.initiator1.id &&
                     savedFork.initiator2.id === this.initiator2.id &&
                     savedFork.initiator2.koef === this.initiator2.koef) {
