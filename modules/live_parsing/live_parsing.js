@@ -14,16 +14,14 @@ async function live_parsing() {
     async function workWithFonbet() {
         const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox','--headless']});
         fonbetPage = await browser.newPage();
+        await fonbetPage.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36');
         await fonbetPage.setViewport({width: 1920, height: 1080});
-        const navigationPromise = fonbetPage.waitForNavigation({waitUntil: "domcontentloaded"});
         await fonbetPage.goto('https://www.fonbet.ru/live/');
-        await navigationPromise;
         await fonbetPage.waitForSelector('#page__wrap > div.page__container.js-scroll-container.js-page-container._device_desktop._theme_red > div.page-layout--qkduQ > div > div.coupon-layout__content--gGzha > div > div.line-filter-layout__content--q-JdM > section > div.table__flex-container > table')
         setInterval(async () => {
-            let t0 = performance.now();
+
             let fonbetMatches = await live()
-            let t1 = performance.now();
-            console.log('Took', (t1 - t0).toFixed(4), 'milliseconds fonbet');
+
         }, 1000)
 
         async function live() {
@@ -90,6 +88,7 @@ async function live_parsing() {
                     }
                 }
                 let keys = Object.keys(sessionStorage);
+                console.log(sessionStorage)
                 deleteMathes(data, keys)
 
                 async function deleteMathes(received_matches, saved_matches) {
@@ -114,6 +113,7 @@ async function live_parsing() {
             });
 
         }
+        console.log("Парсинг на фонбете запущен")
     }
 
     async function workWithOlimp() {
@@ -123,11 +123,7 @@ async function live_parsing() {
         await olimpPage.goto('https://www.olimp.bet/live');
         await olimpPage.waitForSelector('#root > div > div.routes__StyledApp-sc-1q7p8dg-0.oVDye > div > div.content > div')
         setInterval(async () => {
-            let t0 = performance.now();
             let matches = await live()
-            //await preparing(matches);
-            let t1 = performance.now();
-            console.log('Took', (t1 - t0).toFixed(4), 'milliseconds olimp');
         }, 1000)
 
         async function live() {
@@ -319,6 +315,7 @@ async function live_parsing() {
             return result
         }
     }
+    console.log("Парсинг на олимпе запущен")
 }
 
 let i = 0;          // хрень которая меняет кэфы при отсутсивии инета МОЖНО БУДЕТ УБРАТЬ

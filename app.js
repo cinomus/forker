@@ -16,6 +16,7 @@ app.compare = async function compare() {
 
         let olimpMatches = await getM('olimp')
         let fonbetMatches = await getM('fonbet')
+        console.log(`olimp: ${olimpMatches.length} fonbet: ${fonbetMatches.length}`);
         let changedKoefs = await findChangedKoefs(olimpMatches, fonbetMatches);
         await comparing(changedKoefs, olimpMatches, fonbetMatches);
         savedOlimpMatches = olimpMatches;
@@ -23,6 +24,7 @@ app.compare = async function compare() {
     }, 1000)
 
     async function comparing(changedKoefs, ...arguments) {
+        // console.log('checkpoint 1')
         let iteration1 = 0;
         let initiators = [];
         for (let arg of arguments) {
@@ -32,10 +34,14 @@ app.compare = async function compare() {
                     iteration2++;
                     continue
                 } else {
+                    // console.log('checkpoint 1/5')
                     for (let elem of arg) {
                         for (let elem2 of arg2) {
-                            if (elem.team_1 === elem2.team_1 && elem.team_2 === elem2.team_2&& elem.discipline === elem2.discipline && elem.platform !== elem2.platform) {
+                            // console.log(`${elem2.id}${elem2.team_1}${elem2.team_2}`)
+                            // console.log(elem.team_1 === elem2.team_1 && elem.team_2 === elem2.team_2 && elem.discipline === elem2.discipline && elem.platform !== elem2.platform)
+                            if (elem.team_1 === elem2.team_1 && elem.team_2 === elem2.team_2 && elem.discipline === elem2.discipline && elem.platform !== elem2.platform) {
                                 // console.log(elem, elem2);
+                                // console.log('checkpoint 2')
                                 if (elem.drawn_game !== undefined && elem2.drawn_game !== undefined) {
                                     await findForks(elem.koef_1, elem2.winner2_or_noWinners, undefined , undefined,'koef_1&winner2_or_noWinners')
                                     await findForks(elem.koef_2, elem2.winner1_or_noWinners, undefined, undefined, 'koef_2&winner1_or_noWinners')
@@ -121,6 +127,7 @@ app.compare = async function compare() {
                             }
 
                             async function findForks(value1, value2, target1 = 'none', target2 = 'none', event) {
+                                // console.log('checkpoint 3')
                                  // console.log(`${value1} ${value2}`)
                                 if (await valueCheck(value1) && await valueCheck(value2)) {
 
@@ -150,6 +157,7 @@ app.compare = async function compare() {
                                             koef: event.split('&')[1],
                                             koef_value: value2,
                                         })
+                                        // console.log('chechpoint 4')
                                         let fork = new Fork(await getInitiator(elem.id,event.split('&')[0]),await getInitiator(elem2.id,event.split('&')[1]),elem.discipline, await calcProfit(forkValue))
                                         await fork.addFork()
                                         // console.log(fork)
