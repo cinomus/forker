@@ -13,6 +13,7 @@ class Fork {
     }
 
     static forks = [];
+    static forks2 = [];
 
     toObj() {
         return {
@@ -38,7 +39,7 @@ class Fork {
                 if (!savedFork.initiator1.id || !savedFork.initiator2.id||!savedFork.initiator2.koef){
                     console.log(savedFork)
                 }
-                if (!this.initiator1.id || !this.initiator2.id||!this.initiator2.koef){
+                if (this.initiator1.id === undefined|| !this.initiator2.id === undefined||!this.initiator2.koef === undefined){
                     console.log('pizda v vilke')
                 }
                 if (savedFork.initiator1.id === this.initiator1.id &&
@@ -69,6 +70,68 @@ class Fork {
                 Fork.forks.splice(iteration, 1);
             }
         })
+    }
+    static async updateForks(forks){
+        await Fork._deleteFork(forks);
+        await addFork(forks);
+        async function addFork(forks) {
+            for (let fork of forks){
+                if (fork.initiator1 === undefined||fork.initiator2 === undefined) {
+                    return
+                }
+                else{
+                    let iteration = 0;
+                    let savedForks = Fork.forks2.filter((savedFork) => {
+                        if (!savedFork.initiator1.id || !savedFork.initiator2.id||!savedFork.initiator2.koef){
+                            console.log(savedFork)
+                        }
+                        if (!fork.initiator1.id || !fork.initiator2.id||!fork.initiator2.koef){
+                            console.log('pizda v vilke')
+                        }
+                        if (savedFork.initiator1.id === fork.initiator1.id &&
+                            savedFork.initiator2.id === fork.initiator2.id &&
+                            savedFork.initiator2.koef === fork.initiator2.koef) {
+                            return savedFork
+                        }
+                        iteration++;
+                    })
+                    if (savedForks.length === 0) {
+                        Fork.forks2.push(fork);
+                    } else {
+                        if (savedForks[0].initiator2.koef === fork.initiator2.koef &&
+                            savedForks[0].initiator2.koef_value === fork.initiator2.koef_value) {
+                            // не делаем ничего т.к. это старая вилка которая уже была найдена
+                        } else {
+                            Fork.forks2.splice(iteration, 1);
+                            Fork.forks2.push(fork);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    static async _deleteFork(forks){
+        let readyToDelete = [];
+        let iteration = 0;
+        for (let fork of Fork.forks2) {
+            let duplicateInits = forks.filter((receiptedFork) => {
+                if (fork.id === receiptedFork.id &&
+                    fork.team_1 === receiptedFork.team_1 &&
+                    fork.team_2 === receiptedFork.team_2 &&
+                    fork.platform === receiptedFork.platform &&
+                    fork.koef === receiptedFork.koef) {
+                    return fork
+
+                }
+            })
+            if (duplicateInits.length === 0) {
+                readyToDelete.push(iteration)
+            }
+            iteration++;
+        }
+        for (let item of readyToDelete){
+            Fork.forks2.splice(item,1);
+        }
     }
 }
 

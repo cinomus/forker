@@ -26,6 +26,7 @@ app.compare = async function compare() {
         // console.log('checkpoint 1')
         let iteration1 = 0;
         let initiators = [];
+        let forks = [];
         for (let arg of arguments) {
             let iteration2 = 0;
             for (let arg2 of arguments) {
@@ -159,6 +160,7 @@ app.compare = async function compare() {
                                         // console.log('chechpoint 4')
                                         let fork = new Fork(await getInitiator(elem.id,event.split('&')[0]),await getInitiator(elem2.id,event.split('&')[1]),elem.discipline, await calcProfit(forkValue))
                                         await fork.addFork()
+                                        forks.push(fork);
                                         // console.log(fork)
                                         // console.log('kekw',await getInitiator(elem.id,event.split('&')[0]))
                                     }
@@ -232,6 +234,8 @@ app.compare = async function compare() {
 
         }
         await Initiator.updateInitiators(initiators);
+        console.log(forks.length)
+        await Fork.updateForks(forks);
         // console.log('forks ',Fork.forks.length)
         // console.log('end')
     }
